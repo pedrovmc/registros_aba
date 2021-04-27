@@ -14,6 +14,11 @@ class _AbcRegisterPageState
   TextEditingController antecedentController = TextEditingController();
   TextEditingController behaviorController = TextEditingController();
   TextEditingController consequencesController = TextEditingController();
+
+  FocusNode antecedentFocusNode = FocusNode();
+  FocusNode behaviorFocusNode = FocusNode();
+
+  final snackBar = SnackBar(content: Text('Registro Salvo'));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +39,16 @@ class _AbcRegisterPageState
               child: Column(
                 children: [
                   TextFormField(
+                    focusNode: antecedentFocusNode,
+                    textInputAction: TextInputAction.next,
                     controller: antecedentController,
                     decoration: InputDecoration(
                       labelText: "Antecedentes",
                     ),
                   ),
                   TextFormField(
+                    focusNode: behaviorFocusNode,
+                    textInputAction: TextInputAction.next,
                     controller: behaviorController,
                     decoration: InputDecoration(
                       labelText: "Reposta",
@@ -61,12 +70,29 @@ class _AbcRegisterPageState
                         ..behavior = behaviorController.text
                         ..consequences = consequencesController.text
                         ..dateTime = DateTime.now();
-                      controller.registerRepository.insert(abcModel);
+                      await controller.registerRepository.insert(abcModel);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      antecedentController.clear();
+                      behaviorController.clear();
+                      consequencesController.clear();
+                      antecedentFocusNode.requestFocus();
                     },
                     child: Text("Salvar"),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      AbcModel abcModel = AbcModel()
+                        ..antecedent = antecedentController.text
+                        ..behavior = behaviorController.text
+                        ..consequences = consequencesController.text
+                        ..dateTime = DateTime.now();
+                      await controller.registerRepository.insert(abcModel);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      antecedentController.text = consequencesController.text;
+                      behaviorController.clear();
+                      consequencesController.clear();
+                      behaviorFocusNode.requestFocus();
+                    },
                     child: Text(
                       "Salvar e Continuar Narrativa",
                     ),
