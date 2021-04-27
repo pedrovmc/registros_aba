@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:registros_aba/app/core/appbar_widget.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:registros_aba/app/modules/abc_registers/abc_register_controller.dart';
+import 'package:registros_aba/app/shared/models/abc_model.dart';
+import 'package:registros_aba/app/shared/widgets/appbar_widget.dart';
 
-class AbcRegisterPage extends StatelessWidget {
+class AbcRegisterPage extends StatefulWidget {
+  @override
+  _AbcRegisterPageState createState() => _AbcRegisterPageState();
+}
+
+class _AbcRegisterPageState
+    extends ModularState<AbcRegisterPage, AbcRegisterController> {
+  TextEditingController antecedentController = TextEditingController();
+  TextEditingController behaviorController = TextEditingController();
+  TextEditingController consequencesController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +34,19 @@ class AbcRegisterPage extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: antecedentController,
                     decoration: InputDecoration(
                       labelText: "Antecedentes",
                     ),
                   ),
                   TextFormField(
+                    controller: behaviorController,
                     decoration: InputDecoration(
                       labelText: "Reposta",
                     ),
                   ),
                   TextFormField(
+                    controller: consequencesController,
                     decoration: InputDecoration(
                       labelText: "Consequência",
                     ),
@@ -40,7 +55,14 @@ class AbcRegisterPage extends StatelessWidget {
                     height: 8,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      AbcModel abcModel = AbcModel()
+                        ..antecedent = antecedentController.text
+                        ..behavior = behaviorController.text
+                        ..consequences = consequencesController.text
+                        ..dateTime = DateTime.now();
+                      controller.registerRepository.insert(abcModel);
+                    },
                     child: Text("Salvar"),
                   ),
                   ElevatedButton(
