@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive/hive.dart';
 import 'package:registros_aba/app/modules/abc_registers/abc_register_controller.dart';
 import 'package:registros_aba/app/shared/models/abc_model.dart';
 import 'package:registros_aba/app/shared/widgets/appbar_widget.dart';
@@ -70,7 +71,7 @@ class _AbcRegisterPageState
                         ..behavior = behaviorController.text
                         ..consequences = consequencesController.text
                         ..dateTime = DateTime.now();
-                      await controller.registerRepository.insert(abcModel);
+                      await Hive.box('registers').add(abcModel);
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       antecedentController.clear();
                       behaviorController.clear();
@@ -86,7 +87,7 @@ class _AbcRegisterPageState
                         ..behavior = behaviorController.text
                         ..consequences = consequencesController.text
                         ..dateTime = DateTime.now();
-                      await controller.registerRepository.insert(abcModel);
+                      await Hive.box('registers').add(abcModel);
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       antecedentController.text = consequencesController.text;
                       behaviorController.clear();
