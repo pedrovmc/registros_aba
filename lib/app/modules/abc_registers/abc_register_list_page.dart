@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:registros_aba/app/modules/abc_registers/abc_register_controller.dart';
 import 'package:registros_aba/app/shared/models/abc_model.dart';
 import 'package:registros_aba/app/shared/widgets/appbar_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class AbcListPage extends StatelessWidget {
+  final AbcRegisterController controller = Modular.get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +35,23 @@ class AbcListPage extends StatelessWidget {
                       SizedBox(height: 5),
                       Text(currentAbc.antecedent),
                       SizedBox(height: 5),
-                      Text(currentAbc.behavior),
+                      Text(
+                        currentAbc.behavior,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 25,
+                        ),
+                      ),
                       SizedBox(height: 5),
                       Text(currentAbc.consequences),
                       SizedBox(height: 5),
-                      Text(currentAbc.dateTime.toString()),
+                      Align(
+                        child: Text(
+                          controller.formatDateTime(currentAbc.dateTime),
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                        alignment: Alignment.bottomRight,
+                      ),
                       SizedBox(height: 5),
                     ],
                   ),
