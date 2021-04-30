@@ -10,7 +10,7 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.blue,
         brightness: Brightness.light,
       ),
-      initialRoute: "/list",
+      initialRoute: "/",
     ).modular();
   }
 }
