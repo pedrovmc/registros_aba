@@ -27,33 +27,56 @@ class AbcListPage extends StatelessWidget {
             itemCount: registers.values.length,
             itemBuilder: (context, index) {
               AbcModel currentAbc = registers.getAt(index);
-              return Card(
-                child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 5),
-                      Text(currentAbc.antecedent),
-                      SizedBox(height: 5),
-                      Text(
-                        currentAbc.behavior,
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 25,
+              return Dismissible(
+                key: Key(index.toString()),
+                background: Container(
+                  padding: EdgeInsets.only(left: 30),
+                  alignment: Alignment.centerLeft,
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  color: Colors.red[300],
+                ),
+                secondaryBackground: Container(
+                  padding: EdgeInsets.only(right: 30),
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  color: Colors.yellow[300],
+                ),
+                child: Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 5),
+                        Text(currentAbc.antecedent),
+                        SizedBox(height: 5),
+                        Text(
+                          currentAbc.behavior,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 25,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      Text(currentAbc.consequences),
-                      SizedBox(height: 5),
-                      Align(
-                        child: Text(
-                          controller.formatDateTime(currentAbc.dateTime),
-                          style: TextStyle(color: Colors.black54),
+                        SizedBox(height: 5),
+                        Text(currentAbc.consequences),
+                        SizedBox(height: 5),
+                        Align(
+                          child: Text(
+                            controller.formatDateTime(currentAbc.dateTime),
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                          alignment: Alignment.bottomRight,
                         ),
-                        alignment: Alignment.bottomRight,
-                      ),
-                      SizedBox(height: 5),
-                    ],
+                        SizedBox(height: 5),
+                      ],
+                    ),
                   ),
                 ),
               );
