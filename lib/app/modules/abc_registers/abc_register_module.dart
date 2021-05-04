@@ -12,7 +12,7 @@ class AbcRegisterModule extends Module {
   ];
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => AbcRegisterPage()),
-    ChildRoute('/list', child: (_, args) => AbcListPage())
+    ChildRoute('/add', child: (_, args) => AbcRegisterPage()),
+    ChildRoute('/', child: (_, args) => AbcListPage())
   ];
 }

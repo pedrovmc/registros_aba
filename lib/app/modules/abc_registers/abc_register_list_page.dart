@@ -14,6 +14,16 @@ class AbcListPage extends StatelessWidget {
       appBar: PreferredSize(
         child: AppBarWidget(
           title: "Lista de Registros ABC",
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.add,
+                  color: Theme.of(context).accentColor,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/add');
+                })
+          ],
         ),
         preferredSize: const Size.fromHeight(100),
       ),
@@ -21,13 +31,17 @@ class AbcListPage extends StatelessWidget {
         valueListenable: Hive.box('registers').listenable(),
         builder: (context, Box registers, __) {
           if (registers.values.isEmpty) {
-            return Text("Nenhum registro encontrado");
+            return Center(child: Text("Nenhum registro encontrado"));
           }
           return ListView.builder(
             itemCount: registers.values.length,
             itemBuilder: (context, index) {
               AbcModel currentAbc = registers.getAt(index);
               return Dismissible(
+                direction: DismissDirection.startToEnd,
+                onDismissed: (_) {
+                  Hive.box('registers').delete(currentAbc.key);
+                },
                 key: Key(index.toString()),
                 background: Container(
                   padding: EdgeInsets.only(left: 30),
