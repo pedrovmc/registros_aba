@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:registros_aba/app/modules/abc_registers/abc_register_controller.dart';
+import 'package:registros_aba/app/modules/abc_registers/widgets/detais_item_widget.dart';
 
 import 'package:registros_aba/app/shared/models/abc_model.dart';
 import 'package:registros_aba/app/shared/widgets/appbar_widget.dart';
@@ -52,21 +53,22 @@ class AbcDetailsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Antecedente: ${currentAbc.antecedent}",
-              style: TextStyle(fontSize: 30),
+            DetailsItemWidget(
+              title: "Antecedentes",
+              content: currentAbc.antecedent,
             ),
-            Text(
-              "Resposta: ${currentAbc.behavior}",
-              style: TextStyle(fontSize: 30),
+            DetailsItemWidget(
+              title: "Resposta",
+              content: currentAbc.behavior,
             ),
-            Text(
-              "Consequência: ${currentAbc.consequences}",
-              style: TextStyle(fontSize: 30),
+            DetailsItemWidget(
+              title: "Consequências",
+              content: currentAbc.consequences,
             ),
-            Text(
-              controller.formatDateTime(currentAbc.dateTime),
-              style: TextStyle(fontSize: 30),
+            DetailsItemWidget(
+              title: "Data",
+              content: controller.formatDateTime(currentAbc.dateTime),
+              isLast: true,
             ),
             SizedBox(
               height: 70,
