@@ -47,35 +47,37 @@ class AbcDetailsPage extends StatelessWidget {
         ),
         preferredSize: const Size.fromHeight(100),
       ),
-      body: Form(
-          child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            DetailsItemWidget(
-              title: "Antecedentes",
-              content: currentAbc.antecedent,
-            ),
-            DetailsItemWidget(
-              title: "Resposta",
-              content: currentAbc.behavior,
-            ),
-            DetailsItemWidget(
-              title: "Consequências",
-              content: currentAbc.consequences,
-            ),
-            DetailsItemWidget(
-              title: "Data",
-              content: controller.formatDateTime(currentAbc.dateTime),
-              isLast: true,
-            ),
-            SizedBox(
-              height: 70,
-            )
-          ],
-        ),
-      )),
+      body: SingleChildScrollView(
+        child: Form(
+            child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              DetailsItemWidget(
+                title: "Antecedentes",
+                content: currentAbc.antecedent,
+              ),
+              DetailsItemWidget(
+                title: "Resposta",
+                content: currentAbc.behavior,
+              ),
+              DetailsItemWidget(
+                title: "Consequências",
+                content: currentAbc.consequences,
+              ),
+              DetailsItemWidget(
+                title: "Data",
+                content: controller.formatDateTime(currentAbc.dateTime),
+                isLast: true,
+              ),
+              SizedBox(
+                height: 70,
+              )
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

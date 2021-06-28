@@ -14,6 +14,12 @@ class AbcListPage extends StatelessWidget {
       appBar: PreferredSize(
         child: AppBarWidget(
           title: "Lista de Registros ABC",
+          leading: IconButton(
+              color: Colors.blue,
+              icon: Icon(Icons.drive_folder_upload),
+              onPressed: () {
+                controller.exportSheet();
+              }),
           actions: [
             IconButton(
                 icon: Icon(
@@ -25,7 +31,7 @@ class AbcListPage extends StatelessWidget {
                 })
           ],
         ),
-        preferredSize: const Size.fromHeight(100),
+        preferredSize: const Size.fromHeight(75),
       ),
       body: ValueListenableBuilder(
         valueListenable: Hive.box('registers').listenable(),
@@ -36,7 +42,8 @@ class AbcListPage extends StatelessWidget {
           return ListView.builder(
             itemCount: registers.values.length,
             itemBuilder: (context, index) {
-              AbcModel currentAbc = registers.getAt(index);
+              AbcModel currentAbc =
+                  registers.getAt((registers.values.length - 1) - index);
               return Dismissible(
                 direction: DismissDirection.startToEnd,
                 onDismissed: (_) {

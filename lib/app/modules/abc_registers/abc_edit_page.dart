@@ -39,7 +39,7 @@ class _AbcEditPageState
             color: Theme.of(context).accentColor,
           ),
         ),
-        preferredSize: const Size.fromHeight(100),
+        preferredSize: const Size.fromHeight(75),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
