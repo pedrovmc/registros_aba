@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:hive/hive.dart';
 import 'package:registros_aba/app/modules/abc_registers/abc_register_controller.dart';
 import 'package:registros_aba/app/shared/models/abc_model.dart';
@@ -41,41 +42,98 @@ class _AbcRegisterPageState
               key: _formKey,
               child: Column(
                 children: [
-                  TextFormField(
-                    focusNode: _antecedentFocusNode,
-                    textInputAction: TextInputAction.next,
-                    controller: _antecedentController,
-                    decoration: InputDecoration(
-                      labelText: "Antecedentes",
+                  TypeAheadFormField<String?>(
+                    textFieldConfiguration: TextFieldConfiguration(
+                      focusNode: _antecedentFocusNode,
+                      textInputAction: TextInputAction.next,
+                      controller: _antecedentController,
+                      decoration: InputDecoration(
+                        labelText: "Antecedentes",
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Por favor, digite um antecedente";
                       }
                     },
+                    itemBuilder: (context, String? suggestion) {
+                      return ListTile(
+                        title: Text(suggestion!),
+                      );
+                    },
+                    suggestionsCallback: (pattern) {
+                      return controller.findAntecedent(pattern);
+                    },
+                    onSuggestionSelected: (String? suggestion) {
+                      _antecedentController.text = suggestion!;
+                    },
+                    noItemsFoundBuilder: (context) {
+                      return SizedBox(
+                        width: 0,
+                        height: 0,
+                      );
+                    },
                   ),
-                  TextFormField(
-                    focusNode: _behaviorFocusNode,
-                    textInputAction: TextInputAction.next,
-                    controller: _behaviorController,
-                    decoration: InputDecoration(
-                      labelText: "Reposta",
+                  TypeAheadFormField<String?>(
+                    textFieldConfiguration: TextFieldConfiguration(
+                      focusNode: _behaviorFocusNode,
+                      textInputAction: TextInputAction.next,
+                      controller: _behaviorController,
+                      decoration: InputDecoration(
+                        labelText: "Reposta",
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Por favor, digite uma resposta";
                       }
                     },
+                    itemBuilder: (context, String? suggestion) {
+                      return ListTile(
+                        title: Text(suggestion!),
+                      );
+                    },
+                    suggestionsCallback: (pattern) {
+                      return controller.findBehavior(pattern);
+                    },
+                    onSuggestionSelected: (String? suggestion) {
+                      _behaviorController.text = suggestion!;
+                    },
+                    noItemsFoundBuilder: (context) {
+                      return SizedBox(
+                        width: 0,
+                        height: 0,
+                      );
+                    },
                   ),
-                  TextFormField(
-                    controller: _consequencesController,
-                    decoration: InputDecoration(
-                      labelText: "Consequência",
+                  TypeAheadFormField<String?>(
+                    textFieldConfiguration: TextFieldConfiguration(
+                      controller: _consequencesController,
+                      decoration: InputDecoration(
+                        labelText: "Consequência",
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Por favor, digite uma consequência";
                       }
+                    },
+                    itemBuilder: (context, String? suggestion) {
+                      return ListTile(
+                        title: Text(suggestion!),
+                      );
+                    },
+                    suggestionsCallback: (pattern) {
+                      return controller.findConsequences(pattern);
+                    },
+                    onSuggestionSelected: (String? suggestion) {
+                      _consequencesController.text = suggestion!;
+                    },
+                    noItemsFoundBuilder: (context) {
+                      return SizedBox(
+                        width: 0,
+                        height: 0,
+                      );
                     },
                   ),
                   SizedBox(

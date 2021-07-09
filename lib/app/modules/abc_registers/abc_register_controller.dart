@@ -9,6 +9,39 @@ import 'package:share_plus/share_plus.dart';
 import 'package:registros_aba/app/shared/models/abc_model.dart';
 
 class AbcRegisterController {
+  List<String?> findAntecedent(String query) {
+    final List<String> antecedents = [];
+    final allModels = Hive.box('registers').values.toList();
+    allModels.forEach((e) {
+      if (e.antecedent.contains(query)) {
+        antecedents.add(e.antecedent);
+      }
+    });
+    return antecedents.toSet().toList();
+  }
+
+  List<String?> findBehavior(String query) {
+    final List<String> behaviors = [];
+    final allModels = Hive.box('registers').values.toList();
+    allModels.forEach((e) {
+      if (e.behavior.contains(query)) {
+        behaviors.add(e.behavior);
+      }
+    });
+    return behaviors.toSet().toList();
+  }
+
+  List<String?> findConsequences(String query) {
+    final List<String> consequences = [];
+    final allModels = Hive.box('registers').values.toList();
+    allModels.forEach((e) {
+      if (e.consequences.contains(query)) {
+        consequences.add(e.consequences);
+      }
+    });
+    return consequences.toSet().toList();
+  }
+
   String formatDateTime(DateTime dateTime) {
     return DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
   }
